@@ -1,0 +1,96 @@
+﻿@model IEnumerable<ToDoList.Models.Task>
+
+@{
+    ViewBag.Title = "Tasks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Tasks</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            Notes
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Priority.Priority_Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_Due)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Done)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @*@Html.ActionLink(item.Notes.Count.ToString() + ((item.Notes.Count == 1) ? " Note" : " Notes"), "PartialView", "NotesController", new { item.Id }, null)*@
+            <a href="javascript:void(0);" class="noteList" data-id="@item.Id">@item.Notes.Count.ToString() @((item.Notes.Count == 1) ? " Note" : " Notes")</a>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Priority.Priority_Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date_Due)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Done)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
+            <a href="javascript:void(0);" class="taskDetail" data-id="@item.Id">Details</a> |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { onclick = "return confirm('Are you sure you wish to delete this task?');" })
+        </td>
+    </tr>
+}
+
+</table>
+
+@*Shared between note and task detail partials*@
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div id="myModalContent" class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div id="" class="modal-body">
+                Modal body..
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/TaskList")
+}

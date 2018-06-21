@@ -1,0 +1,118 @@
+﻿@model ToDoList.Models.Task
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.h2 Task</h2>
+
+
+@using (Html.BeginForm("EditCreateSave", "Task", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Date_Due, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Date_Due, new { htmlAttributes = new { @class = "form-control datefield" } })
+                @Html.ValidationMessageFor(model => model.Date_Due, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Priority_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Priority_Id, (List<SelectListItem>)ViewBag.Priorities)
+                    @Html.ValidationMessageFor(model => model.Priority_Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Done, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Done)
+                    @Html.ValidationMessageFor(model => model.Done, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        @*Looks messed up but works*@
+        <div class="form-group">
+
+            <div class="col-md-10">
+                <a href="javascript:void(0);" class="addNote" data-id="0">Add Note</a>
+            </div>
+        </div>
+
+        @*https://stackoverflow.com/a/33875656/4051272*@
+        <div class="container notesContainer">
+
+            @foreach(var n in Model.Notes)
+            {
+                Html.RenderPartial("~/Views/Note/PartialEdit.cshtml", n);
+            }
+
+            @*@for (int i = 0; i < Model.NotesList.Count(); ++i)
+            {
+            <div class="flex-container">
+                <div class="form-group toggleMe">
+                    @Html.HiddenFor(model => Model.NotesList[i].Id)
+                    @Html.HiddenFor(model => Model.NotesList[i].Task_Id)
+                    @Html.HiddenFor(model => Model.NotesList[i].Delete, new { htmlAttributes = new { @class = "noteDelete" } })
+
+                    @Html.LabelFor(modelItem => Model.NotesList[i].Content, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(modelItem => Model.NotesList[i].Content, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(modelItem => Model.NotesList[i].Content, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+                <div class="">
+                    <a href="javascript:void(0);" class="deleteNote" data-id="0">Delete</a>
+                </div>
+            </div>
+            }
+        </div>
+        <div class="form-group">*@
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "List")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/TaskEditCreate")
+}

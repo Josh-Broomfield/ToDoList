@@ -1,0 +1,29 @@
+﻿@model ToDoList.Models.Note
+
+<div class="form-horizontal">
+@using (Html.BeginCollectionItem("Notes"))
+{
+    <div class="flex-container">
+        <div class="form-group toggleMe">
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Task_Id)
+            @Html.HiddenFor(model => model.Delete, new { htmlAttributes = new { @class = "noteDelete" } })
+
+            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+        <div class="">
+            <a href="javascript:void(0);" class="deleteNote" data-id="0">Delete</a>
+        </div>
+    </div>
+
+}
+</div>
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@

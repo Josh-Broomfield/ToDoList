@@ -1,0 +1,11 @@
+﻿/*https://www.w3schools.com/css/tryit.asp?filename=trycss_border_round*/
+.round3 {
+    border: 2px solid red;
+    border-radius: 12px;
+    width: 25em border-box;
+}
+
+.flex-container {
+    display: flex;
+    flex-shrink: 0;
+}
